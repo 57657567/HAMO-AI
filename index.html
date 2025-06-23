@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مساعد مركز الاتصال الذكي HAMO</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Link to Diff.js library for text comparison -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff/5.1.0/diff.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Controls -->
+        <div class="card grid-span-12">
+            <div class="card-header">
+                <!-- No title needed here -->
+            </div>
+            <div class="controls">
+                <button id="startButton" class="btn-primary">
+                    <span class="emoji">▶️</span>
+                    بدء الاستماع
+                </button>
+                <button id="stopButton" class="btn-danger" disabled>
+                    <span class="emoji">⏹️</span>
+                    إيقاف الاستماع
+                </button>
+            </div>
+        </div>
+
+        <!-- Customer Voice Input (Order 2) -->
+        <div class="card grid-span-6">
+            <div class="card-header">
+                <h2 class="card-title">
+                     المدخل الصوتي للعميل
+                    <span class="emoji">🎙️</span> <!-- Microphone Emoji -->
+                </h2>
+            </div>
+            <div class="info-panel" style="margin-bottom: 1rem;">
+                <strong>إرشادات الصوت:</strong> لاستقبال صوت العميل وصوتك معاً، يجب إعداد توجيه الصوت في نظام التشغيل (Windows). اتبع التعليمات المقدمة لإعداد "Listen to this device" لميكروفونك وتوجيهه إلى VB-Audio Cable.
+            </div>
+            <div class="transcript-box" id="transcriptContainer">
+                <span id="finalTranscript"></span>
+                <span id="interimTranscript"></span>
+            </div>
+            <textarea id="customerSpeech" rows="4" style="margin-top: 1rem;" readonly placeholder="كلام العميل المستخرج سيظهر هنا..."></textarea>
+        </div>
+
+         <!-- AI Suggested Reply (Order 3) -->
+        <div class="card grid-span-6">
+             <div class="card-header">
+                <h2 class="card-title">
+                    الرد المقترح من الذكاء الصناعي
+                    <span class="emoji">✨</span> <!-- Sparkle/Glow Emoji -->
+                    <span class="emoji">💬</span> <!-- Speech Bubble Emoji -->
+                </h2>
+            </div>
+            <textarea id="suggestedReply" rows="6" placeholder="الرد المقترح من الذكاء الصناعي سيظهر هنا..."></textarea>
+        </div>
+
+
+        <!-- AI Analysis (Order 4) -->
+        <div class="card grid-span-6">
+            <div class="card-header">
+                <h2 class="card-title">
+                    تحليل الذكاء الصناعي
+                    <span class="emoji">🔬</span> <!-- Microscope Emoji -->
+                    <span class="emoji">🧠</span> <!-- Brain Emoji -->
+                </h2>
+            </div>
+            <textarea id="customerSpeechTranslated" rows="3" readonly placeholder="الترجمة إلى العربية..."></textarea>
+            <div class="analysis-pills" style="margin-top: 1rem;">
+                <div class="pill">المشاعر: <strong id="sentiment">...</strong></div>
+                <div class="pill">نية العميل: <strong id="intent">...</strong></div>
+            </div>
+        </div>
+
+        <!-- Agent Reply & Diff (Order 5) -->
+        <div class="card grid-span-6">
+             <div class="card-header">
+                <h2 class="card-title">
+                    رد الموظف ومقارنة الاختلافات
+                     <span class="emoji">📝</span> <!-- Memo/Document Emoji -->
+                     <span class="emoji">↔️</span> <!-- Comparison Arrows Emoji -->
+                </h2>
+            </div>
+             <textarea id="agentReply" rows="6" placeholder="اكتب ردك هنا أو انسخ الرد المقترح..."></textarea>
+            <div class="controls" style="margin-top: 1rem;">
+                 <button id="copyReply" class="btn-secondary">
+                     <span class="emoji">📋</span> <!-- Clipboard Emoji -->
+                     نسخ الرد المقترح
+                 </button>
+                 <button id="sendReplyButton" class="btn-primary">
+                     <span class="emoji">🚀</span> <!-- Rocket/Paper Plane Emoji -->
+                     إرسال الرد
+                 </button>
+                 <button id="useCanned" class="btn-secondary">
+                      <span class="emoji">📚</span> <!-- Books Emoji -->
+                     استخدام رد جاهز
+                 </button>
+                 <select id="cannedResponsesSelect" style="flex-grow: 1;">
+                     <!-- Options will be populated by JS -->
+                 </select>
+            </div>
+            <strong style="margin-top: 1rem; display: block;">مقارنة ردك بالرد المقترح:</strong>
+            <div id="diffOutput" class="diff-container reply-box" style="height: 150px;"></div>
+            <strong style="margin-top: 1rem; display: block;">سياق العمل (للحصول على ردود أفضل):</strong>
+            <textarea id="jobContext" rows="4" placeholder="مثال: أنا وكيل دعم فني في شركة اتصالات. مهمتي حل مشاكل الفواتير وتقديم خصومات. كن ودوداً ومحترفاً."></textarea>
+        </div>
+
+    </div>
+
+    <div id="statusBar" class="status-bar status-idle">جاهز</div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
